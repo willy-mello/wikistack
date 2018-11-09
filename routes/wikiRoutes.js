@@ -7,12 +7,13 @@ const models = require('../models/index');
 const main = require('../views/main');
 
 const Page = models.Page;
+const User = models.User
 
 
 
 router.get('/', async (req, res, next) => {
   try {
-    const allPages = await models.Page.findAll()
+    const allPages = await Page.findAll()
     res.send(main(allPages));
   }
   catch (err) { next(err) }
@@ -20,13 +21,14 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     // To-do: put logic to prevent creating a page named "add"
-    const title = req.body.title;
-    const content = req.body.content;
-    const page = new Page({
-      title: title,
-      content: content,
-    });
-    console.log(page);
+
+    const author = req.body.name;
+    const email = req.body.email;
+    const [user, wasCreated] = await User.findOrCreate({ where: { name: author, email: email } })
+
+    const page = await Page.create(req.body);
+    page.setAuthor(user)
+    // console.log(page);
     await page.save();
     res.redirect(`/wiki/${page.slug}`);
     // res.json(req.body)

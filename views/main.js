@@ -14,7 +14,7 @@ module.exports = (pages) => layout(html`
     <ul>
     ${pages.map(elem=>html`
       <li>
-        <a href= localhost:1337/wiki/${elem.slug}>${elem.title} by STEVEN</a>
+        <a href= localhost:1337/wiki/${elem.slug}>${elem.title} by ${elem.authorId}</a>
       </li>`
       )}
     </ul>

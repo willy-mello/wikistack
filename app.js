@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 //calling development on morgan so we see a development version of morgan
 app.use('/wiki', wikiRoutes);
-app.use('/user', userRoutes);
+app.use('/users', userRoutes);
 app.get('/', (req, res, next) => {
   res.send(layout());
 });

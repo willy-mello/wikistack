@@ -41,6 +41,8 @@ const User = db.define('users', {
     },
   },
 });
+Page.belongsTo(User, {as: 'author'})
+// User.hasMany(Page)
 
 //authenticating database inside the index.js file, not sure if this is best practice
 db.authenticate().then(() => {

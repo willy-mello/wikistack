@@ -4,16 +4,18 @@ const path = require('path');
 const addPage = require('../views/addPage');
 const wikipage = require('../views/wikipage');
 const models = require('../models/index');
+const main = require('../views/main');
 
 const Page = models.Page;
 
+
+
 router.get('/', async (req, res, next) => {
   try {
-    //res.send('wiki get request worked');
-    res.redirect('/');
-  } catch (err) {
-    console.error(err.message);
+    const allPages = await models.Page.findAll()
+    res.send(main(allPages));
   }
+  catch (err) { next(err) }
 });
 router.post('/', async (req, res, next) => {
   try {

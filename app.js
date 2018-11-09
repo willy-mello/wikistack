@@ -5,6 +5,7 @@ const layout = require('./views/layout');
 const models = require('./models/index'); //activates our database
 const wikiRoutes = require('./routes/wikiRoutes');
 const userRoutes = require('./routes/userRoutes');
+// const main = require('./views/main')
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use(morgan('dev'));
 app.use('/wiki', wikiRoutes);
 app.use('/user', userRoutes);
 app.get('/', (req, res, next) => {
-  res.send(layout(''));
+  res.send(layout());
 });
 
 const PORT = 1337;

@@ -1,38 +1,44 @@
 const Sequelize = require('sequelize');
 const db = new Sequelize('postgres://localhost:5432/wikistack', {
-  logging: false
+  logging: false,
 });
 
 const Page = db.define('pages', {
   title: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   slug: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   content: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
   },
   status: {
     type: Sequelize.ENUM('open', 'closed'),
-    defaultValue: 'closed'
+    defaultValue: 'closed',
   },
+});
+
+Page.beforeValidate((userInstance, optionsObject) => {
+  userInstance.slug = userInstance.title
+    .replace(/\s+/g, '_')
+    .replace(/\W/g, '');
 });
 
 const User = db.define('users', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isEmail: true
-    }
+      isEmail: true,
+    },
   },
 });
 
@@ -41,5 +47,4 @@ db.authenticate().then(() => {
   console.log('connected to the database');
 });
 
-
-module.exports ={Page,User};
+module.exports = { Page, User };

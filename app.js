@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const express = require('express');
 const path = require('path');
 const layout = require('./views/layout');
-const  models  = require('./models/index'); //activates our database
+const models = require('./models/index'); //activates our database
 const wikiRoutes = require('./routes/wikiRoutes');
 const userRoutes = require('./routes/userRoutes');
 
@@ -24,11 +24,12 @@ const PORT = 1337;
 //trying to be on the same path as the workshop with sync calls and listen calls
 async function syncDb() {
   try {
-    await models.Page.sync({ force: true });
-    await models.User.sync({force: true});
-  }
-  catch (err) {
-    console.error(err.message)
+    // await models.Page.sync({ force: true });
+    // await models.User.sync({ force: true });
+    await models.Page.sync();
+    await models.User.sync();
+  } catch (err) {
+    console.error(err.message);
   }
 
   app.listen(PORT, () => {
@@ -36,6 +37,4 @@ async function syncDb() {
   });
 }
 
-syncDb()
-
-
+syncDb();

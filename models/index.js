@@ -41,4 +41,5 @@ db.authenticate().then(() => {
   console.log('connected to the database');
 });
 
-module.exports = { db };
+
+module.exports ={Page,User};
